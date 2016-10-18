@@ -1,0 +1,27 @@
+- hosts: localhost
+  connection: local
+  vars:
+    - github_token: "a03c556fd2e39e8f315154f1c54a24f27947833d"
+  tasks:
+    - name: Create that repo
+      github_repo:
+        github_auth_key: "{{github_token}}"
+        name: "Hello-World"
+        description: "This is your test repository"
+        private: no
+        has_issues: no
+        has_wiki: no
+        has_downloads: no
+        state: present
+      register: result
+
+    - debug: var=result
+
+    - name: Delete that repo
+      github_repo:
+        github_auth_key: "{{github_token}}"
+        name: "Hello-World"
+        state: absent
+      register: result
+
+    - debug: var=result
